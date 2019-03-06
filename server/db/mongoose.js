@@ -1,7 +1,7 @@
 const mongoose = require ('mongoose');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/TodoApp',  {
+mongoose.connect(process.env.todo_db ||'mongodb://localhost:27017/TodoApp',  {
     useNewUrlParser: true
 });
 
