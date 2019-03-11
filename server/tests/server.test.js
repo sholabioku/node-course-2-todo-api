@@ -89,8 +89,9 @@ describe('GET /todos', () => {
 
 describe('GET /todos/:id', () => {
   it('should return todo doc', (done) => {
+      let id = todos[0]._id.toHexString();
       request(app)
-        .get(`/todos/${todos[0]._id.toHexString()}`)
+        .get(`/todos/${id}`)
         .expect(200)
         .expect((res) => {
             expect(res.body.todo.text).toBe(todos[0].text)
