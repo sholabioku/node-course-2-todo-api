@@ -206,8 +206,8 @@ describe('PATCH /todo/:id', () => {
             expect(res.body.todo.completed).toBe(false);
             expect(res.body.todo.completedAt).toBeNull();
         })
+  
         .end(done)
-
   });
 });
 
