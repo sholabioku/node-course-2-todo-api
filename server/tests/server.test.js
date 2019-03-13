@@ -20,8 +20,7 @@ const todos = [
 ];
 
 beforeEach((done) => {
-    Todo.deleteMany({})
-        .then(() => {
+    Todo.deleteMany({}).then(() => {
             return Todo.insertMany(todos);
         }).then(() => done());
 });
@@ -206,7 +205,7 @@ describe('PATCH /todo/:id', () => {
             expect(res.body.todo.completed).toBe(false);
             expect(res.body.todo.completedAt).toBeNull();
         })
-  
+
         .end(done)
   });
 });
