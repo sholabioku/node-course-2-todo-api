@@ -23,9 +23,14 @@ app.post('/todos', authenticate, (req, res) => {
 
     todo.save()
         .then((doc) => {
-            res.send(doc)
+            res.send({
+                doc: doc,
+                message: 'Todo created successfully'
+            });
         }).catch((err) => {
-            res.status(400).send(err)
+            res.status(400).send({
+                error: err
+            });
         });
 
 
@@ -36,68 +41,77 @@ app.get('/todos', authenticate, (req, res) => {
         _creator:req.user._id
     })
         .then((todos) => {
-            res.send({todos});
+            res.send({
+                todos: todos,
+                message: 'Todos were fetch successfully'
+            });
         }).catch((err) => {
-            res.status(400).send(err);
+            res.status(400).send({
+                error: err
+            });
         });
 });
 
 
 app.get('/todos/:id', authenticate, (req, res) => {
     let id = req.params.id;
-    //Validate id using isValid
-    //404-send back empty send
 
     if (!ObjectID.isValid(id)) {
-        return res.status(404).send()
+        return res.status(404).send({
+            message: 'Invalid ID'
+        })
     }
 
-    //findById
-        //Success
-            //if todo-send it back
-            //if no todo-send back 404 with empty body
-        //Error
-            //400-and send empty body back
     Todo.findOne({
         _id: id,
         _creator: req.user._id
     })
         .then((todo) => {
             if (!todo) {
-                return res.status(404).send();
+                return res.status(404).send({
+                    message: 'Todo not found'
+                });
             }
-            res.send({todo})
+            res.send({
+                todo: todo,
+                message: 'Todo was fetched successfully'
+            })
         }).catch((err) => {
-            return res.status(400).send()
+            return res.status(400).send({
+                error: err
+            });
         });
 });
 
 
 app.delete('/todos/:id', authenticate, (req, res) => {
-    //Get the id
-    let id = req.params.id;
-    //Validate the id--if not valid return 404
-    if (!ObjectID.isValid(id)) {
-        return res.status(404).send()
-    }
 
-    //Remove todo by id
-        //Success
-            //If not doc-return 404 with empty body
-            //If doc-return doc with 200
-        //Error
-            //404 with empty body
+    let id = req.params.id;
+
+    if (!ObjectID.isValid(id)) {
+        return res.status(404).send({
+            message: 'Invalid ID'
+        });
+    };
+
     Todo.findOneAndDelete({
         _id: id,
         _creator: req.user._id
     })
         .then(todo => {
             if (!todo) {
-                return res.status(404).send();
+                return res.status(404).send({
+                    message: 'Todo not found'
+                });
             }
-            res.status(200).send({todo});
+            res.status(200).send({
+                todo: todo,
+                message: 'Todo was deleted'
+            });
         })
-        .catch(err => res.status(404).send());
+        .catch(err => res.status(404).send({
+            error: err
+        }));
 });
 
 
@@ -106,7 +120,9 @@ app.patch('/todos/:id', authenticate, (req, res) => {
     let body = _.pick(req.body, ['text', 'completed']);
 
     if (!ObjectID.isValid(id)) { 
-      return res.status(404).send();
+      return res.status(404).send({
+          message: 'Invalid ID and Update failed'
+      });
     }
 
     if (_.isBoolean(body.completed) && body.completed) {
@@ -119,13 +135,20 @@ app.patch('/todos/:id', authenticate, (req, res) => {
     Todo.findOneAndUpdate({_id: id, _creator: req.user._id}, {$set: body}, {new: true})
         .then((todo) => {
         if (!todo) {
-            return res.status(404).send();
+            return res.status(404).send({
+                message: 'ID not found and update failed'
+            });
         }
 
-        res.send({todo});
+        res.send({
+            todo: todo,
+            message: 'Todo updated successfully'
+        });
         }).catch((e) => {
-        res.status(400).send();
-        })
+        res.status(400).send({
+            error: e
+        });
+    })
 });
 
 
@@ -137,9 +160,14 @@ app.post('/users', (req, res) => {
         .then(() => {
             return user.generateAuthToken()
         }).then((token) => {
-            res.header('x-auth', token).send(user);
+            res.header('x-auth', token).send({
+                user: user,
+                message: 'User created'
+            });
         }).catch((err) => {
-            res.status(400).send(err);
+            res.status(400).send({
+                error: err
+            });
         });
 
 });
@@ -155,16 +183,24 @@ app.post('/users/login', (req, res) => {
 
     User.findByCredentials(body.email, body.password).then((user) => {
         return user.generateAuthToken().then((token) => {
-            res.header('x-auth', token).send(user);
+            res.header('x-auth', token).send({
+                user: user,
+                message: 'User login successfully'
+            });
         })
     }).catch((e) => {
-        res.status(400).send();
+        res.status(400).send({
+            error: e,
+            message: 'Auth failed'
+        });
     });
 });
 
 app.delete('/users/me/token', authenticate, (req, res) => {
     req.user.removeToken(req.token).then(() => {
-        res.status(200).send()
+        res.status(200).send({
+            message: 'User logged out successfully'
+        })
     }, () => {
         res.status(400).send();
     });
