@@ -7,7 +7,9 @@ let authenticate = (req, res, next) => {
         .then((user) => {
             if (!user) {
             // return  res.status(401).send();
-            return Promise.reject();
+            return Promise.reject({
+                message: 'Auth failed'
+            });
 
             }
 
@@ -16,7 +18,9 @@ let authenticate = (req, res, next) => {
             next();
 
         }).catch((err) => {
-            res.status(401).send();
+            res.status(401).send({
+                message: 'Auth failed'
+            });
         });
 };
 
