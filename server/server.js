@@ -161,13 +161,12 @@ app.post('/users', (req, res) => {
             return user.generateAuthToken()
         }).then((token) => {
             res.header('x-auth', token).send({
-                user: user,
+                user,
                 message: 'User created'
             });
-        }).catch((err) => {
+        }).catch(() => {
             res.status(400).send({
-                error: err,
-                message: 'User already exit'
+                message: 'User already exist'
             });
         });
 
