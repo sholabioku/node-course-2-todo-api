@@ -202,9 +202,7 @@ app.delete('/users/me/token', authenticate, (req, res) => {
             message: 'User logged out successfully'
         })
     }, () => {
-        res.status(401).send({
-            message: 'Auth failed'
-        });
+        res.status(400).send();
     });
 });
 
