@@ -166,7 +166,8 @@ app.post('/users', (req, res) => {
             });
         }).catch((err) => {
             res.status(400).send({
-                error: err
+                error: err,
+                message: 'User already exit'
             });
         });
 
