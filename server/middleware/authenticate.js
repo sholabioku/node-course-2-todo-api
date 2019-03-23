@@ -6,10 +6,12 @@ let authenticate = (req, res, next) => {
     User.findByToken(token)
         .then((user) => {
             if (!user) {
-            // return  res.status(401).send();
-            return Promise.reject({
-                message: 'Auth failed'
+            return  res.status(401).send({
+                message: 'User is not authorized'
             });
+            // return Promise.reject({
+            //     message: 'User does not exist'
+            // });
 
             }
 
@@ -19,7 +21,7 @@ let authenticate = (req, res, next) => {
 
         }).catch((err) => {
             res.status(401).send({
-                message: 'Auth failed'
+                message: 'Authentication failed'
             });
         });
 };
