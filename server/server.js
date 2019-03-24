@@ -185,7 +185,7 @@ app.post('/users/login', (req, res) => {
     }).catch((e) => {
         res.status(400).send({
             error: e,
-            message: 'Auth failed'
+            message: 'User does not exist'
         });
     });
 });
