@@ -285,6 +285,7 @@ describe('POST /users', () => {
     it('shoould create a user ', (done) => {
         let email = 'sholabioku@gmail.com';
         let password = '123abc!';
+        let user;
 
         request(app)
             .post('/users')

@@ -23,10 +23,7 @@ app.post('/todos', authenticate, (req, res) => {
 
     todo.save()
         .then((doc) => {
-            res.send({
-                doc: doc,
-                message: 'Todo created successfully'
-            });
+            res.send(doc);
         }).catch((err) => {
             res.status(400).send({
                 error: err
@@ -43,7 +40,7 @@ app.get('/todos', authenticate, (req, res) => {
         .then((todos) => {
             res.send({
                 todos: todos,
-                message: 'Todos were fetch successfully'
+                message: 'Todos were fetched successfully'
             });
         }).catch((err) => {
             res.status(400).send({
@@ -119,7 +116,7 @@ app.patch('/todos/:id', authenticate, (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['text', 'completed']);
 
-    if (!ObjectID.isValid(id)) { 
+    if (!ObjectID.isValid(id)) {
       return res.status(404).send({
           message: 'Invalid ID and Update failed'
       });
@@ -160,10 +157,7 @@ app.post('/users', (req, res) => {
         .then(() => {
             return user.generateAuthToken()
         }).then((token) => {
-            res.header('x-auth', token).send({
-                user,
-                message: 'User created'
-            });
+            res.header('x-auth', token).send(user);
         }).catch(() => {
             res.status(400).send({
                 message: 'User already exist'
