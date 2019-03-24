@@ -196,7 +196,9 @@ app.delete('/users/me/token', authenticate, (req, res) => {
             message: 'User logged out successfully'
         })
     }, () => {
-        res.status(400).send();
+        res.status(400).send({
+            message: 'User does not exist'
+        });
     });
 });
 
