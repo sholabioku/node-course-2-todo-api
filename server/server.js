@@ -168,39 +168,6 @@ app.patch('/todos/:id', authenticate, async (req, res) => {
         });
     };
 
-    // let id = req.params.id;
-    // let body = _.pick(req.body, ['text', 'completed']);
-
-    // if (!ObjectID.isValid(id)) {
-    //   return res.status(404).send({
-    //       message: 'Invalid ID and Update failed'
-    //   });
-    // };
-
-    // if (_.isBoolean(body.completed) && body.completed) {
-    //   body.completedAt = new Date().getTime();
-    // } else {
-    //   body.completed = false;
-    //   body.completedAt = null;
-    // };
-
-    // Todo.findOneAndUpdate({_id: id, _creator: req.user._id}, {$set: body}, {new: true})
-    //     .then((todo) => {
-    //     if (!todo) {
-    //         return res.status(404).send({
-    //             message: 'ID not found and update failed'
-    //         });
-    //     };
-
-    //     res.send({
-    //         todo: todo,
-    //         message: 'Todo updated successfully'
-    //     });
-    //     }).catch((e) => {
-    //     res.status(400).send({
-    //         error: e
-    //     });
-    // })
 });
 
 
@@ -215,20 +182,7 @@ app.post('/users', async (req, res) => {
         res.status(400).send({
             message: 'User already exist'
         });
-    }
-    // let body = _.pick(req.body, ['email', 'password']);
-    // let user = new User(body);
-
-    // user.save()
-    //     .then(() => {
-    //         return user.generateAuthToken()
-    //     }).then((token) => {
-    //         res.header('x-auth', token).send(user);
-    //     }).catch(() => {
-    //         res.status(400).send({
-    //             message: 'User already exist'
-    //         });
-    //     });
+    };
 
 });
 
@@ -254,21 +208,6 @@ app.post('/users/login', async (req, res) => {
         });
     };
 
-
-    // const body = _.pick(req.body, ['email', 'password']);
-    // User.findByCredentials(body.email, body.password).then((user) => {
-    //     return user.generateAuthToken().then((token) => {
-    //         res.header('x-auth', token).send({
-    //             user: user,
-    //             message: 'User login successfully'
-    //         });
-    //     })
-    // }).catch((e) => {
-    //     res.status(400).send({
-    //         error: e,
-    //         message: 'User does not exist'
-    //     });
-    // });
 });
 
 app.delete('/users/me/token', authenticate, async (req, res) => {
@@ -283,15 +222,6 @@ app.delete('/users/me/token', authenticate, async (req, res) => {
             message: 'User does not exist'
         });
     };
-    // req.user.removeToken(req.token).then(() => {
-    //     res.status(200).send({
-    //         message: 'User logged out successfully'
-    //     })
-    // }, () => {
-    //     res.status(400).send({
-    //         message: 'User does not exist'
-    //     });
-    // });
 });
 
 
