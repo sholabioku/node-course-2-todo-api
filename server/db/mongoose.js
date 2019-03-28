@@ -7,8 +7,6 @@ mongoose.connect(process.env.MONGODB_URI,  {
     useFindAndModify: false,
 });
 
-// mongoose.set('useCreateIndex', true);
-// mongoose.set('useFindAndModify', false);
 
 
 module.exports = {mongoose}
