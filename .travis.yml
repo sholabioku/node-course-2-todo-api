@@ -1,18 +1,12 @@
 sudo: false
+
 language: node_js
+
 node_js:
-- "stable"
-branches: 
-  only:
-  - master
-cache:
-  directories:
-  - node_modules
-before_install:
-- npm update
-install:
-- npm
+  - node
+
 script:
-- npm test
-- npm run coverage
-after_success: npm run coveralls
+  - npm run test: coveralls
+
+notifications:
+  email: false
