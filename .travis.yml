@@ -3,10 +3,7 @@ sudo: false
 language: node_js
 
 node_js:
-  - node
-
-script:
-  - npm run test: coveralls
+  - "stable"
 
 notifications:
   email: false
