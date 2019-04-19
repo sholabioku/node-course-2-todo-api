@@ -3,7 +3,18 @@ sudo: false
 language: node_js
 
 node_js:
-  - "stable"
+- "stable"
 
-notifications:
-  email: false
+env:
+global:
+ - export NODE_ENV=test || SET \"NODE_ENV=test\"
+before_script:
+
+- npm install
+script:
+- npm test
+- npm run coverage
+
+after_success: npm run coveralls
+
+email: false
