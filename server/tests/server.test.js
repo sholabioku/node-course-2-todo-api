@@ -14,51 +14,32 @@ beforeEach(populateTodos);
 
 
 describe('POST /todos', () => {
-  it('should create a new todo', (done) => {
+  it('should create a new todo', async () => {
       let text = 'Test todo text';
 
-      request(app)
+    const res = await request(app)
         .post('/todos')
         .set('x-auth', users[0].tokens[0].token)
-        .send({text})
-        .expect(200)
-        .expect((res) => {
-            expect(res.body.text).toBe(text)
-        })
-        .end((err, res) => {
-            if (err) {
-                return done(err)
-            }
+        .send({text});
+    expect(res.status).toBe(200);
+    expect(res.body.text).toBe(text);
 
-            Todo.find({text})
-                .then(todos => {
-                    expect(todos.length).toBe(1);
-                    expect(todos[0].text).toBe(text);
-                    done()
-                })
-                .catch( e => done(e));
-        });
+    const todos = await Todo.find({text});
+    expect(todos.length).toBe(1);
+    expect(todos[0].text).toBe(text);
+
     });
 
-  it('should not create todo with invalid data', (done) => {
+  it('should not create todo with invalid data', async () => {
 
-    request(app)
+    const res = await request(app)
         .post('/todos')
         .set('x-auth', users[0].tokens[0].token)
-        .send({})
-        .expect(400)
-        .end((err, res) => {
-            if (err) {
-                return done(err)
-            }
+        .send({});
+    expect(res.status).toBe(400);
 
-            Todo.find()
-                .then(todos => {
-                    expect(todos.length).toBe(2);
-                    done()
-                })
-                .catch( e => done(e));
-        });
+    const todos = await Todo.find();
+    expect(todos.length).toBe(2);
 
   });
 });
