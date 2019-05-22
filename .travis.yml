@@ -1,25 +1,23 @@
 language: node_js
-os:
-  - windows
-  - linux
-  - osx
 node_js:
-  - "node"
-  - 10
-  - 8
-  - 6
-matrix:
-## An ENOMEM error occurs with 11.6.0 under Travis-CI for Windows.
-## Disable until we can determine the cause.
-#  include:
-#    - os: windows
-#      node_js: "latest"
-  exclude:
-    - os: windows
-      node_js: "node"
-git:
-  depth:
-    1
+  - "stable"
+cache:
+  directories:
+    - "node_modules"
+install:
+  - npm install
+services:
+  - mongodb
 
-after_script:
-  - "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
+env:
+  global:
+  - NODE_ENV=test
+
+before_script:
+  - sleep 15
+  - mongo todoAppTest --eval 'db.createUser({user:"bilush",pwd:"test",roles:["readWrite"]});'
+
+script:
+  - npm test
+after_success:
+  - npm run coverage
