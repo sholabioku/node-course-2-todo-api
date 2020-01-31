@@ -99,33 +99,6 @@ app.delete('/todos/:id', authenticate, async (req, res) => {
       error: e,
     });
   }
-
-  // let id = req.params.id;
-
-  // if (!ObjectID.isValid(id)) {
-  //     return res.status(404).send({
-  //         message: 'Invalid ID'
-  //     });
-  // };
-
-  // Todo.findOneAndDelete({
-  //     _id: id,
-  //     _creator: req.user._id
-  // })
-  //     .then(todo => {
-  //         if (!todo) {
-  //             return res.status(404).send({
-  //                 message: 'Todo not found'
-  //             });
-  //         }
-  //         res.status(200).send({
-  //             todo: todo,
-  //             message: 'Todo was deleted'
-  //         });
-  //     })
-  //     .catch(err => res.status(404).send({
-  //         error: err
-  //     }));
 });
 
 app.patch('/todos/:id', authenticate, async (req, res) => {
