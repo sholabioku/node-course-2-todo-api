@@ -1,0 +1,8 @@
++ lint-staged@10.0.7
+added 70 packages from 38 contributors and audited 6363 packages in 34.395s
+
+20 packages are looking for funding
+  run `npm fund` for details
+
+found 94 vulnerabilities (3 moderate, 90 high, 1 critical)
+  run `npm audit fix` to fix them, or `npm audit` for details
