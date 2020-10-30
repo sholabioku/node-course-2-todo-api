@@ -42,16 +42,6 @@ describe('POST /todos', () => {
 });
 
 describe('GET /todos', () => {
-  //   it('should get all todos', (done) => {
-  //     request(app)
-  //         .get('/todos')
-  //         .set('x-auth', users[0].tokens[0].token)
-  //         .expect(200)
-  //         .expect((res) => {
-  //             expect(res.body.todos.length).toBe(1);
-  //         })
-  //         .end(done);
-  //   });
   it('should get all todos', async () => {
     const res = await request(app)
       .get('/todos')
@@ -62,17 +52,6 @@ describe('GET /todos', () => {
 });
 
 describe('GET /todos/:id', () => {
-  //   it('should return todo doc', (done) => {
-  //       let id = todos[0]._id.toHexString();
-  //       request(app)
-  //         .get(`/todos/${id}`)
-  //         .set('x-auth', users[0].tokens[0].token)
-  //         .expect(200)
-  //         .expect((res) => {
-  //             expect(res.body.todo.text).toBe(todos[0].text)
-  //         })
-  //         .end(done)
-  //   });
   it('should return todo doc', async () => {
     const id = todos[0]._id.toHexString();
     const res = await request(app)
